@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
 body{
 font-family:'Poppins',sans-serif;
 background:#0a0f2c;
@@ -28,16 +28,16 @@ justify-content:center;
 align-items:center;
 text-align:center;
 z-index:500;
+transition:opacity 0.8s ease;
 }
 #intro h1{
 font-family:'Great Vibes',cursive;
-font-size:48px;
+font-size:46px;
 color:#7da2ff;
-margin-bottom:30px;
-line-height:1.4;
+margin-bottom:25px;
 }
 #intro button{
-padding:12px 30px;
+padding:12px 28px;
 border:none;
 border-radius:25px;
 background:#1f4fff;
@@ -57,11 +57,6 @@ padding:15px;
 background:rgba(0,0,0,0.4);
 z-index:100;
 }
-nav a{
-color:#7da2ff;
-text-decoration:none;
-font-size:14px;
-}
 
 /* SECTIONS */
 .section{
@@ -76,7 +71,7 @@ padding:100px 20px 40px;
 
 h1{
 font-family:'Great Vibes',cursive;
-font-size:60px;
+font-size:58px;
 color:#7da2ff;
 margin-bottom:20px;
 }
@@ -95,8 +90,8 @@ margin-top:20px;
 .heart{
 position:fixed;
 bottom:-20px;
-animation:heartUp 4s linear forwards;
 pointer-events:none;
+animation:heartUp 4s linear forwards;
 }
 @keyframes heartUp{
 0%{transform:translateY(0);}
@@ -106,9 +101,8 @@ pointer-events:none;
 /* BUTTERFLY */
 .butterfly{
 position:fixed;
-font-size:22px;
-animation:fly 10s linear forwards;
 pointer-events:none;
+animation:fly 10s linear forwards;
 }
 @keyframes fly{
 0%{transform:translateX(-10vw) translateY(80vh);}
@@ -137,7 +131,7 @@ cursor:pointer;
 .slot{
 display:flex;
 gap:15px;
-font-size:40px;
+font-size:38px;
 margin:20px 0;
 }
 .reel{
@@ -147,12 +141,6 @@ display:flex;
 justify-content:center;
 align-items:center;
 border-radius:10px;
-}
-
-.time-box{
-margin-top:20px;
-font-size:18px;
-line-height:1.8;
 }
 </style>
 </head>
@@ -165,7 +153,6 @@ line-height:1.8;
 <button onclick="enterSite()">Giriş</button>
 </div>
 
-<!-- ✅ NAV -->
 <nav>
 <a href="#home">Ana Sayfa</a>
 <a href="#memory">Hafıza</a>
@@ -173,20 +160,17 @@ line-height:1.8;
 <a href="#time">Zaman</a>
 </nav>
 
-<!-- ✅ HOME -->
 <section id="home" class="section">
 <h1>Doğa</h1>
 <p>02/07/2026'dan beri hayat daha net.<br>Daha sakin.<br>Daha anlamlı.</p>
 <button class="btn" onclick="megaEffect()">Başlat</button>
 </section>
 
-<!-- ✅ MEMORY -->
 <section id="memory" class="section">
 <h1>Hafıza</h1>
 <div class="memory" id="memoryGame"></div>
 </section>
 
-<!-- ✅ SLOT -->
 <section id="slot" class="section">
 <h1>Slot</h1>
 <div class="slot">
@@ -198,22 +182,23 @@ line-height:1.8;
 <p id="slotResult"></p>
 </section>
 
-<!-- ✅ TIME -->
 <section id="time" class="section">
 <h1>Zaman</h1>
-<div class="time-box" id="timeBox"></div>
+<div id="timeBox"></div>
 </section>
 
 <script>
 
-/* INTRO */
+/* ✅ GİRİŞ FADE */
 function enterSite(){
-document.getElementById("intro").style.display="none";
+const intro=document.getElementById("intro");
+intro.style.opacity="0";
+setTimeout(()=>{intro.style.display="none";},800);
 }
 
-/* EFFECT */
+/* ✅ KALP + KELEBEK */
 function megaEffect(){
-for(let i=0;i<80;i++){
+for(let i=0;i<70;i++){
 setTimeout(()=>{
 let heart=document.createElement("div");
 heart.className="heart";
@@ -230,83 +215,88 @@ let b=document.createElement("div");
 b.className="butterfly";
 b.innerHTML="🦋";
 b.style.top=Math.random()*80+"vh";
+b.style.fontSize=(Math.random()*20+15)+"px";
 document.body.appendChild(b);
 setTimeout(()=>b.remove(),10000);
 },i*200);
 }
 }
 
-/* MEMORY */
-let symbols=["💙","🦋","✨","⭐","🌙"];
-let cards=[...symbols,...symbols].sort(()=>0.5-Math.random());
+/* ✅ MEMORY */
+const symbols=["💙","🦋","✨","⭐","🌙"];
+const cards=[...symbols,...symbols].sort(()=>0.5-Math.random());
 let first=null;
+
 cards.forEach(sym=>{
 let c=document.createElement("div");
 c.className="card";
-c.innerText="?";
-c.onclick=function(){
-if(c.innerText!=="?")return;
-c.innerText=sym;
+c.textContent="?";
+c.addEventListener("click",function(){
+if(c.textContent!=="?")return;
+c.textContent=sym;
 if(!first){first=c;}
 else{
-if(first.innerText!==c.innerText){
+if(first.textContent!==c.textContent){
 setTimeout(()=>{
-c.innerText="?";
-first.innerText="?";
+c.textContent="?";
+first.textContent="?";
 first=null;
 },600);
 }else{
 first=null;
 }
 }
-};
+});
 document.getElementById("memoryGame").appendChild(c);
 });
 
-/* SLOT */
-let icons=["💙","🦋","✨","⭐","🌙"];
+/* ✅ SLOT (iOS SAFE) */
 function spin(){
-r1.innerText=icons[Math.floor(Math.random()*icons.length)];
-r2.innerText=icons[Math.floor(Math.random()*icons.length)];
-r3.innerText=icons[Math.floor(Math.random()*icons.length)];
-if(r1.innerText===r2.innerText&&r2.innerText===r3.innerText){
-document.getElementById("slotResult").innerText="Kazandın 💙";
+const icons=["💙","🦋","✨","⭐","🌙"];
+const reels=[
+document.getElementById("r1"),
+document.getElementById("r2"),
+document.getElementById("r3")
+];
+reels.forEach(r=>{
+r.textContent=icons[Math.floor(Math.random()*icons.length)];
+});
+if(reels[0].textContent===reels[1].textContent &&
+reels[1].textContent===reels[2].textContent){
+document.getElementById("slotResult").textContent="Kazandın 💙";
 megaEffect();
 }else{
-document.getElementById("slotResult").innerText="Tekrar dene.";
+document.getElementById("slotResult").textContent="Tekrar dene.";
 }
 }
 
-/* ✅ GELİŞMİŞ ZAMAN HESABI */
+/* ✅ GERÇEK TAKVİM ZAMAN HESABI */
 function updateTime(){
-let start=new Date("2026-07-02T00:00:00");
-let now=new Date();
+const start=new Date(2026,6,2);
+const now=new Date();
 
-let diff=now-start;
-if(diff<0)diff=0;
+let years=now.getFullYear()-start.getFullYear();
+let months=now.getMonth()-start.getMonth();
+let days=now.getDate()-start.getDate();
 
-let seconds=Math.floor(diff/1000);
-let minutes=Math.floor(seconds/60);
-let hours=Math.floor(minutes/60);
-let days=Math.floor(hours/24);
+if(days<0){
+months--;
+const prevMonth=new Date(now.getFullYear(),now.getMonth(),0);
+days+=prevMonth.getDate();
+}
+if(months<0){
+years--;
+months+=12;
+}
 
-let years=Math.floor(days/365);
-days%=365;
-
-let months=Math.floor(days/30);
-days%=30;
-
-let weeks=Math.floor(days/7);
-days%=7;
-
-hours%=24;
-minutes%=60;
-seconds%=60;
+const diff=now-start;
+const hours=Math.floor(diff/3600000)%24;
+const minutes=Math.floor(diff/60000)%60;
+const seconds=Math.floor(diff/1000)%60;
 
 document.getElementById("timeBox").innerHTML=
 years+" yıl<br>"+
 months+" ay<br>"+
-weeks+" hafta<br>"+
 days+" gün<br>"+
 hours+" saat<br>"+
 minutes+" dakika<br>"+
