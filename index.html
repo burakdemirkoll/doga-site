@@ -17,385 +17,264 @@ gtag('config', 'G-TCZV2Q01WK');
 </script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
 font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#0a0f2c,#111a4d,#1b2a7a);
+background:#0a0f2c;
 color:white;
 overflow-x:hidden;
-transition:0.6s;
 }
-.light{
-background:linear-gradient(135deg,#eef2f3,#ffffff);
-color:#1b2a7a;
-}
-#intro{
-position:fixed;width:100%;height:100%;
-background:#0a0f2c;
-display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-text-align:center;z-index:500;padding:20px;
-transition:opacity 0.8s;
-}
-#intro h1{
-font-family:'Great Vibes',cursive;
-font-size:48px;color:#7da2ff;line-height:1.4;
-}
+
+/* NAV */
 nav{
-position:fixed;top:0;width:100%;
-background:rgba(10,15,44,0.85);
-display:flex;justify-content:center;
-gap:10px;padding:10px;z-index:200;
-backdrop-filter:blur(10px);
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:center;
+gap:30px;
+padding:15px;
+background:rgba(0,0,0,0.3);
+z-index:100;
 }
 nav a{
-color:#7da2ff;text-decoration:none;
-font-size:13px;padding:6px 12px;
-border-radius:15px;transition:0.3s;
+color:#7da2ff;
+text-decoration:none;
+font-size:14px;
 }
-nav a:hover{background:rgba(125,162,255,0.2);}
-.section{
-min-height:100vh;display:flex;
-flex-direction:column;justify-content:center;
-align-items:center;padding:90px 20px 40px;
-text-align:center;opacity:0;
-transform:translateY(40px);transition:1s;
+
+/* MAIN */
+.main{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding-top:60px;
 }
-.section.visible{opacity:1;transform:translateY(0);}
-h1{font-family:'Great Vibes',cursive;font-size:55px;color:#7da2ff;margin-bottom:20px;}
-h2{font-family:'Great Vibes',cursive;font-size:40px;color:#7da2ff;margin-bottom:20px;}
-p{max-width:500px;line-height:1.8;margin-bottom:20px;}
+
+h1{
+font-family:'Great Vibes',cursive;
+font-size:60px;
+color:#7da2ff;
+margin-bottom:20px;
+}
+
 .btn{
-padding:12px 25px;border:none;
+padding:12px 30px;
+border:none;
 border-radius:25px;
-background:linear-gradient(45deg,#3f5efb,#5f8bff);
-color:white;cursor:pointer;margin:5px;
-transition:0.3s;font-family:'Poppins',sans-serif;
+background:#1f4fff;
+color:white;
+cursor:pointer;
+margin-top:20px;
 }
-.btn:hover{transform:scale(1.05);}
+
+/* HEART */
+.heart{
+position:fixed;
+bottom:-20px;
+animation:heartUp 4s linear forwards;
+pointer-events:none;
+}
+@keyframes heartUp{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-110vh);opacity:0;}
+}
+
+/* BUTTERFLY */
+.butterfly{
+position:fixed;
+font-size:22px;
+animation:flyButterfly 10s linear forwards;
+pointer-events:none;
+}
+@keyframes flyButterfly{
+0%{transform:translateX(-10vw) translateY(80vh);}
+100%{transform:translateX(110vw) translateY(-60vh);}
+}
+
+/* MEMORY */
 .memory{
-display:grid;grid-template-columns:repeat(5,65px);
-gap:10px;justify-content:center;margin-bottom:15px;
+display:grid;
+grid-template-columns:repeat(5,60px);
+gap:10px;
+margin-top:40px;
 }
 .card{
-width:65px;height:65px;background:#7da2ff;
-display:flex;justify-content:center;align-items:center;
-font-size:26px;border-radius:10px;cursor:pointer;
+width:60px;
+height:60px;
+background:#1f4fff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+border-radius:10px;
+cursor:pointer;
 }
-.slot-machine{display:flex;gap:10px;font-size:40px;margin:20px 0;}
+
+/* SLOT */
+.slot{
+display:flex;
+gap:10px;
+font-size:35px;
+margin-top:30px;
+}
 .reel{
-width:70px;height:70px;background:#111a4d;
-display:flex;justify-content:center;align-items:center;
+width:60px;
+height:60px;
+background:#111a4d;
+display:flex;
+justify-content:center;
+align-items:center;
 border-radius:10px;
 }
-.count{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;}
-.count div{background:rgba(125,162,255,0.2);padding:10px 15px;border-radius:10px;}
-.mode{position:fixed;bottom:20px;right:20px;z-index:300;}
-.heart{
-position:fixed;color:#7da2ff;
-animation:float 4s linear forwards;
-pointer-events:none;z-index:400;
-}
-@keyframes float{0%{transform:translateY(100vh);}100%{transform:translateY(-10vh);opacity:0;}}
-.butterfly{
-position:fixed;font-size:20px;
-animation:fly 12s linear forwards;
-pointer-events:none;z-index:1;
-}
-@keyframes fly{0%{transform:translateX(-10vw) translateY(80vh);}100%{transform:translateX(110vw) translateY(-10vh);}}
-#adminPanel{
-display:none;position:fixed;
-bottom:10px;left:10px;
-background:#111a4d;padding:15px;
-border-radius:10px;font-size:12px;
-z-index:999;color:white;
+
+#admin{
+display:none;
+position:fixed;
+bottom:10px;
+left:10px;
+background:#111a4d;
+padding:10px;
+border-radius:10px;
+font-size:12px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="intro">
-<h1>Milyonlarca dilek hakkım olsaydı,<br>ben yine seni dilerdim.</h1>
-<button class="btn" onclick="enterSite()">Giriş</button>
-</div>
-
 <nav>
-<a href="#home">Ana Sayfa</a>
-<a href="#memory">Hafıza</a>
-<a href="#slot">Slot</a>
-<a href="#time">Zaman</a>
+<a href="#">Ana Sayfa</a>
+<a href="#">Hafıza</a>
+<a href="#">Slot</a>
+<a href="#">Zaman</a>
 </nav>
 
-<button class="btn mode" onclick="toggleMode()">🌙 / ☀️</button>
-
-<div class="section" id="home">
+<div class="main">
 <h1>Doğa</h1>
 <p>02/07/2026'dan beri hayat daha net.<br>Daha sakin.<br>Daha anlamlı.</p>
-<button class="btn" onclick="startEffect()">Başlat</button>
-</div>
+<button class="btn" onclick="megaEffect()">Başlat</button>
 
-<div class="section" id="memory">
-<h2>Hafıza Oyunu</h2>
+<!-- MEMORY -->
 <div class="memory" id="memoryGame"></div>
-<div>
-Hamle: <span id="moves">0</span> |
-Süre: <span id="timer">0</span>s |
-Skor: <span id="score">0</span>
-</div>
-<button class="btn" onclick="resetGame()">Yeniden Başlat</button>
-</div>
 
-<div class="section" id="slot">
-<h2>Slot</h2>
-<div class="slot-machine">
+<!-- SLOT -->
+<div class="slot">
 <div class="reel" id="r1">❔</div>
 <div class="reel" id="r2">❔</div>
 <div class="reel" id="r3">❔</div>
 </div>
 <button class="btn" onclick="spin()">Çevir</button>
 <p id="slotResult"></p>
+
+<!-- TIME -->
+<p id="timeText" style="margin-top:30px;"></p>
+
 </div>
 
-<div class="section" id="time">
-<h2>02 / 07 / 2026</h2>
-<div class="count">
-<div><span id="d">0</span> Gün</div>
-<div><span id="h">0</span> Saat</div>
-<div><span id="m">0</span> Dakika</div>
-<div><span id="s">0</span> Saniye</div>
-</div>
+<div id="admin">
+Admin Panel<br>
+Ziyaret: <span id="visitCount">0</span>
 </div>
 
-<div id="adminPanel">
-<b>Admin Panel</b><br>
-Ziyaret: <span id="liveVisits">0</span><br>
-Slot Win: <span id="liveSlot">0</span><br>
-Memory: <span id="liveMemory">0</span>
-</div>
-
-<!-- ✅ SİTE FONKSİYONLARI (NORMAL SCRIPT - HER ZAMAN ÇALIŞIR) -->
 <script>
-/* Firebase hazır olana kadar boş fonksiyon */
-window.incrementStat = window.incrementStat || function(){};
 
-function trackEvent(name,data){
-if(typeof gtag==="function"){gtag("event",name,data||{});}
+/* ✅ BAŞLAT EFEKT */
+function megaEffect(){
+for(let i=0;i<70;i++){
+setTimeout(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💙";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*25+15)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),4000);
+},i*50);
 }
 
-/* INTRO */
-function enterSite(){
-document.getElementById("intro").style.opacity="0";
-setTimeout(function(){
-document.getElementById("intro").style.display="none";
-},800);
-trackEvent("intro_entered");
-}
-
-/* MODE */
-function toggleMode(){
-document.body.classList.toggle("light");
-}
-
-/* SCROLL ANIM */
-function reveal(){
-document.querySelectorAll(".section").forEach(function(sec){
-if(sec.getBoundingClientRect().top<window.innerHeight-100){
-sec.classList.add("visible");
-}
-});
-}
-window.addEventListener("scroll",reveal);
-window.addEventListener("load",reveal);
-
-/* HEART */
-function heart(){
-var h=document.createElement("div");
-h.className="heart";
-h.innerHTML="💙";
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=(Math.random()*20+15)+"px";
-document.body.appendChild(h);
-setTimeout(function(){h.remove();},4000);
-}
-
-/* START */
-function startEffect(){
-trackEvent("start_clicked");
-for(var i=0;i<30;i++)setTimeout(heart,i*60);
-}
-
-/* BUTTERFLY */
-setInterval(function(){
-var b=document.createElement("div");
+for(let i=0;i<20;i++){
+setTimeout(()=>{
+let b=document.createElement("div");
 b.className="butterfly";
 b.innerHTML="🦋";
-b.style.fontSize=(Math.random()*15+15)+"px";
-b.style.animationDuration=(Math.random()*8+8)+"s";
+b.style.top=Math.random()*80+"vh";
+b.style.animationDuration=(Math.random()*5+6)+"s";
 document.body.appendChild(b);
-setTimeout(function(){b.remove();},16000);
-},5000);
+setTimeout(()=>b.remove(),10000);
+},i*200);
+}
+}
 
-/* MEMORY GAME */
-var symbols=["💙","🦋","✨","🌙","⭐","🎵","🌊","🔥","🌌","🌿"];
-var first=null,lock=false,moves=0,matched=0,gameTime=0,timerInterval;
-
-function initGame(){
-trackEvent("memory_started");
-var cards=symbols.concat(symbols).sort(function(){return 0.5-Math.random();});
-document.getElementById("memoryGame").innerHTML="";
-first=null;lock=false;moves=0;matched=0;gameTime=0;
-document.getElementById("moves").innerText=0;
-document.getElementById("score").innerText=0;
-document.getElementById("timer").innerText=0;
-clearInterval(timerInterval);
-timerInterval=setInterval(function(){
-gameTime++;
-document.getElementById("timer").innerText=gameTime;
-},1000);
-
-cards.forEach(function(sym){
+/* ✅ MEMORY */
+var symbols=["💙","🦋","✨","⭐","🌙"];
+var cards=[...symbols,...symbols];
+cards.sort(()=>0.5-Math.random());
+var first=null;
+cards.forEach(sym=>{
 var c=document.createElement("div");
 c.className="card";
 c.innerText="?";
 c.onclick=function(){
-if(lock||c.innerText!=="?")return;
+if(c.innerText!=="?")return;
 c.innerText=sym;
 if(!first){first=c;}
 else{
-moves++;
-document.getElementById("moves").innerText=moves;
-if(first.innerText===c.innerText){
-matched++;
-document.getElementById("score").innerText=matched*10;
-first=null;
-if(matched===10){
-clearInterval(timerInterval);
-incrementStat("memoryWins");
-trackEvent("memory_completed",{moves:moves,time_spent:gameTime});
-for(var i=0;i<40;i++)setTimeout(heart,i*50);
-}
-}else{
-lock=true;
-var f=first;
-setTimeout(function(){
+if(first.innerText!==c.innerText){
+setTimeout(()=>{
 c.innerText="?";
-f.innerText="?";
+first.innerText="?";
 first=null;
-lock=false;
-},700);
+},600);
+}else{
+first=null;
 }
 }
 };
 document.getElementById("memoryGame").appendChild(c);
 });
-}
-function resetGame(){initGame();}
-initGame();
 
-/* SLOT */
+/* ✅ SLOT */
 var icons=["💙","🦋","✨","⭐","🌙"];
-function spinReel(reel,delay){
-var spins=20;
-var interval=setInterval(function(){
-reel.innerText=icons[Math.floor(Math.random()*icons.length)];
-spins--;
-if(spins<=0)clearInterval(interval);
-},delay);
-}
 function spin(){
-trackEvent("slot_spin");
 var r1=document.getElementById("r1");
 var r2=document.getElementById("r2");
 var r3=document.getElementById("r3");
-document.getElementById("slotResult").innerText="";
-spinReel(r1,80);
-setTimeout(function(){spinReel(r2,100);},200);
-setTimeout(function(){spinReel(r3,120);},400);
-setTimeout(function(){
-if(r1.innerText===r2.innerText && r2.innerText===r3.innerText){
+r1.innerText=icons[Math.floor(Math.random()*icons.length)];
+r2.innerText=icons[Math.floor(Math.random()*icons.length)];
+r3.innerText=icons[Math.floor(Math.random()*icons.length)];
+if(r1.innerText===r2.innerText&&r2.innerText===r3.innerText){
 document.getElementById("slotResult").innerText="Kazandın 💙";
-incrementStat("slotWins");
-trackEvent("slot_win");
-for(var i=0;i<25;i++)setTimeout(heart,i*70);
 }else{
 document.getElementById("slotResult").innerText="Tekrar dene.";
 }
-},2600);
 }
 
-/* COUNTDOWN */
+/* ✅ TIME */
 function updateTime(){
 var start=new Date("2026-07-02T00:00:00");
 var now=new Date();
 var diff=now-start;
-if(diff<0)diff=0;
-document.getElementById("d").innerText=Math.floor(diff/86400000);
-document.getElementById("h").innerText=Math.floor(diff%86400000/3600000);
-document.getElementById("m").innerText=Math.floor(diff%3600000/60000);
-document.getElementById("s").innerText=Math.floor(diff%60000/1000);
+document.getElementById("timeText").innerText=
+Math.floor(diff/86400000)+" gün geçti.";
 }
 setInterval(updateTime,1000);
 updateTime();
 
-/* ADMIN PANEL - 5 kere "a" */
-var secretCount=0;
-document.addEventListener("keydown",function(e){
+/* ✅ ADMIN */
+let count=0;
+document.addEventListener("keydown",e=>{
 if(e.key==="a"){
-secretCount++;
-if(secretCount>=5){
-document.getElementById("adminPanel").style.display="block";
+count++;
+if(count===5){
+document.getElementById("admin").style.display="block";
 }
-}else{
-secretCount=0;
 }
 });
 
-/* UTM SOURCE */
-(function(){
-var params=new URLSearchParams(window.location.search);
-var source=params.get("source");
-if(source){trackEvent("visit_source",{source:source});}
-})();
-</script>
-
-<!-- ✅ FIREBASE (AYRI MODULE - ÇÖKSE BİLE SİTE ÇALIŞIR) -->
-<script type="module">
-try{
-const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js");
-const { getDatabase, ref, update, increment, onValue } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCpzNvqVjvf3flCKufkQuGdSE7f98R9O00",
-  authDomain: "doga-site.firebaseapp.com",
-  databaseURL: "https://doga-site-default-rtdb.firebaseio.com",
-  projectId: "doga-site",
-  storageBucket: "doga-site.firebasestorage.app",
-  messagingSenderId: "95852287082",
-  appId: "1:95852287082:web:ad216c2b2c465731d1e613"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const statsRef = ref(db,"stats");
-
-update(statsRef,{visits:increment(1)});
-
-onValue(statsRef,(snap)=>{
-const data=snap.val();
-if(data){
-document.getElementById("liveVisits").innerText=data.visits||0;
-document.getElementById("liveSlot").innerText=data.slotWins||0;
-document.getElementById("liveMemory").innerText=data.memoryWins||0;
-}
-});
-
-window.incrementStat=function(field){
-update(statsRef,{[field]:increment(1)});
-};
-}catch(err){
-console.log("Firebase yüklenemedi:",err);
-}
 </script>
 
 </body>
