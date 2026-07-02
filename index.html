@@ -7,18 +7,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-<!-- GOOGLE ANALYTICS -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TCZV2Q01WK"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-TCZV2Q01WK');
-function trackEvent(name,data={}){
-if(typeof gtag==="function"){gtag("event",name,data);}
-}
-</script>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
 body{
@@ -26,6 +14,35 @@ font-family:'Poppins',sans-serif;
 background:#0a0f2c;
 color:white;
 overflow-x:hidden;
+}
+
+/* INTRO */
+#intro{
+position:fixed;
+width:100%;
+height:100%;
+background:#0a0f2c;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+z-index:500;
+}
+#intro h1{
+font-family:'Great Vibes',cursive;
+font-size:48px;
+color:#7da2ff;
+margin-bottom:30px;
+line-height:1.4;
+}
+#intro button{
+padding:12px 30px;
+border:none;
+border-radius:25px;
+background:#1f4fff;
+color:white;
+cursor:pointer;
 }
 
 /* NAV */
@@ -39,14 +56,12 @@ gap:30px;
 padding:15px;
 background:rgba(0,0,0,0.4);
 z-index:100;
-backdrop-filter:blur(10px);
 }
 nav a{
 color:#7da2ff;
 text-decoration:none;
 font-size:14px;
 }
-nav a.active{color:white}
 
 /* SECTIONS */
 .section{
@@ -57,13 +72,6 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:100px 20px 40px;
-opacity:0;
-transform:translateY(40px);
-transition:0.8s;
-}
-.section.visible{
-opacity:1;
-transform:translateY(0);
 }
 
 h1{
@@ -81,21 +89,18 @@ background:#1f4fff;
 color:white;
 cursor:pointer;
 margin-top:20px;
-transition:0.3s;
 }
-.btn:hover{transform:scale(1.05)}
 
-/* HEART PARTICLE */
+/* HEART */
 .heart{
 position:fixed;
 bottom:-20px;
 animation:heartUp 4s linear forwards;
 pointer-events:none;
-z-index:999;
 }
 @keyframes heartUp{
-0%{transform:translateY(0) scale(1);opacity:1;}
-100%{transform:translateY(-120vh) scale(1.5);opacity:0;}
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);opacity:0;}
 }
 
 /* BUTTERFLY */
@@ -104,7 +109,6 @@ position:fixed;
 font-size:22px;
 animation:fly 10s linear forwards;
 pointer-events:none;
-z-index:998;
 }
 @keyframes fly{
 0%{transform:translateX(-10vw) translateY(80vh);}
@@ -143,25 +147,25 @@ display:flex;
 justify-content:center;
 align-items:center;
 border-radius:10px;
-font-size:30px;
 }
 
-/* ADMIN */
-#admin{
-display:none;
-position:fixed;
-bottom:10px;
-left:10px;
-background:#111a4d;
-padding:12px;
-border-radius:10px;
-font-size:12px;
+.time-box{
+margin-top:20px;
+font-size:18px;
+line-height:1.8;
 }
 </style>
 </head>
 
 <body>
 
+<!-- ✅ INTRO -->
+<div id="intro">
+<h1>Milyonlarca dilek hakkım olsaydı,<br>ben yine seni dilerdim.</h1>
+<button onclick="enterSite()">Giriş</button>
+</div>
+
+<!-- ✅ NAV -->
 <nav>
 <a href="#home">Ana Sayfa</a>
 <a href="#memory">Hafıza</a>
@@ -169,21 +173,20 @@ font-size:12px;
 <a href="#time">Zaman</a>
 </nav>
 
-<!-- HOME -->
+<!-- ✅ HOME -->
 <section id="home" class="section">
 <h1>Doğa</h1>
 <p>02/07/2026'dan beri hayat daha net.<br>Daha sakin.<br>Daha anlamlı.</p>
 <button class="btn" onclick="megaEffect()">Başlat</button>
 </section>
 
-<!-- MEMORY -->
+<!-- ✅ MEMORY -->
 <section id="memory" class="section">
 <h1>Hafıza</h1>
-<div>Hamle: <span id="moves">0</span> | Süre: <span id="memTime">0</span>s</div>
 <div class="memory" id="memoryGame"></div>
 </section>
 
-<!-- SLOT -->
+<!-- ✅ SLOT -->
 <section id="slot" class="section">
 <h1>Slot</h1>
 <div class="slot">
@@ -195,45 +198,21 @@ font-size:12px;
 <p id="slotResult"></p>
 </section>
 
-<!-- TIME -->
+<!-- ✅ TIME -->
 <section id="time" class="section">
 <h1>Zaman</h1>
-<p id="timeText"></p>
+<div class="time-box" id="timeBox"></div>
 </section>
-
-<div id="admin">
-Admin Panel<br>
-Ziyaret: <span id="visitCount"></span>
-</div>
 
 <script>
 
-/* SECTION FADE */
-function reveal(){
-document.querySelectorAll(".section").forEach(sec=>{
-if(sec.getBoundingClientRect().top<window.innerHeight-100){
-sec.classList.add("visible");
+/* INTRO */
+function enterSite(){
+document.getElementById("intro").style.display="none";
 }
-});
-}
-window.addEventListener("scroll",reveal);
-reveal();
 
-/* ACTIVE NAV */
-window.addEventListener("scroll",()=>{
-document.querySelectorAll("section").forEach(sec=>{
-if(window.scrollY>=sec.offsetTop-200){
-document.querySelectorAll("nav a").forEach(a=>a.classList.remove("active"));
-let id=sec.getAttribute("id");
-let link=document.querySelector(`nav a[href="#${id}"]`);
-if(link)link.classList.add("active");
-}
-});
-});
-
-/* MEGA EFFECT */
+/* EFFECT */
 function megaEffect(){
-trackEvent("start_clicked");
 for(let i=0;i<80;i++){
 setTimeout(()=>{
 let heart=document.createElement("div");
@@ -257,39 +236,25 @@ setTimeout(()=>b.remove(),10000);
 }
 }
 
-/* MEMORY GAME */
-let symbols=["💙","🦋","✨","⭐","🌙","🌌","🔥","🌊","🌿","🎵"];
+/* MEMORY */
+let symbols=["💙","🦋","✨","⭐","🌙"];
 let cards=[...symbols,...symbols].sort(()=>0.5-Math.random());
-let first=null,lock=false,moves=0,memTimer=0,interval;
-
-function initMemory(){
-document.getElementById("memoryGame").innerHTML="";
-moves=0;
-memTimer=0;
-document.getElementById("moves").innerText=0;
-document.getElementById("memTime").innerText=0;
-clearInterval(interval);
-interval=setInterval(()=>{memTimer++;document.getElementById("memTime").innerText=memTimer},1000);
-
+let first=null;
 cards.forEach(sym=>{
 let c=document.createElement("div");
 c.className="card";
 c.innerText="?";
 c.onclick=function(){
-if(lock||c.innerText!=="?")return;
+if(c.innerText!=="?")return;
 c.innerText=sym;
 if(!first){first=c;}
 else{
-moves++;
-document.getElementById("moves").innerText=moves;
 if(first.innerText!==c.innerText){
-lock=true;
 setTimeout(()=>{
 c.innerText="?";
 first.innerText="?";
 first=null;
-lock=false;
-},700);
+},600);
 }else{
 first=null;
 }
@@ -297,64 +262,59 @@ first=null;
 };
 document.getElementById("memoryGame").appendChild(c);
 });
-}
-initMemory();
 
 /* SLOT */
 let icons=["💙","🦋","✨","⭐","🌙"];
 function spin(){
-trackEvent("slot_spin");
-let reels=[r1,r2,r3];
-reels.forEach(r=>{
-let count=15;
-let spinInt=setInterval(()=>{
-r.innerText=icons[Math.floor(Math.random()*icons.length)];
-count--;
-if(count<=0)clearInterval(spinInt);
-},100);
-});
-setTimeout(()=>{
+r1.innerText=icons[Math.floor(Math.random()*icons.length)];
+r2.innerText=icons[Math.floor(Math.random()*icons.length)];
+r3.innerText=icons[Math.floor(Math.random()*icons.length)];
 if(r1.innerText===r2.innerText&&r2.innerText===r3.innerText){
 document.getElementById("slotResult").innerText="Kazandın 💙";
-trackEvent("slot_win");
 megaEffect();
 }else{
 document.getElementById("slotResult").innerText="Tekrar dene.";
 }
-},1700);
 }
 
-/* TIME */
+/* ✅ GELİŞMİŞ ZAMAN HESABI */
 function updateTime(){
 let start=new Date("2026-07-02T00:00:00");
 let now=new Date();
+
 let diff=now-start;
-document.getElementById("timeText").innerText=Math.floor(diff/86400000)+" gün geçti.";
+if(diff<0)diff=0;
+
+let seconds=Math.floor(diff/1000);
+let minutes=Math.floor(seconds/60);
+let hours=Math.floor(minutes/60);
+let days=Math.floor(hours/24);
+
+let years=Math.floor(days/365);
+days%=365;
+
+let months=Math.floor(days/30);
+days%=30;
+
+let weeks=Math.floor(days/7);
+days%=7;
+
+hours%=24;
+minutes%=60;
+seconds%=60;
+
+document.getElementById("timeBox").innerHTML=
+years+" yıl<br>"+
+months+" ay<br>"+
+weeks+" hafta<br>"+
+days+" gün<br>"+
+hours+" saat<br>"+
+minutes+" dakika<br>"+
+seconds+" saniye";
 }
+
 setInterval(updateTime,1000);
 updateTime();
-
-/* VISIT COUNT */
-let visits=localStorage.getItem("visits")||0;
-visits++;
-localStorage.setItem("visits",visits);
-document.getElementById("visitCount").innerText=visits;
-
-/* ADMIN (Shift+D 3 kez) */
-let combo=0;
-document.addEventListener("keydown",e=>{
-if(e.shiftKey && e.key==="D"){
-combo++;
-if(combo>=3){
-document.getElementById("admin").style.display="block";
-}
-}
-});
-
-/* UTM */
-let params=new URLSearchParams(window.location.search);
-let source=params.get("source");
-if(source){trackEvent("visit_source",{source});}
 
 </script>
 
