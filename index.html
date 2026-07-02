@@ -3,194 +3,396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doğaya 💙</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<title>Doğa</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
 body{
 font-family:'Poppins',sans-serif;
-min-height:100vh;
 background:linear-gradient(135deg,#0a0f2c,#111a4d,#1b2a7a);
-overflow-x:hidden;
 color:white;
+transition:0.5s;
+overflow-x:hidden;
+}
+
+/* LIGHT MODE */
+.light{
+background:linear-gradient(135deg,#eef2f3,#ffffff);
+color:#1b2a7a;
+}
+.light nav{background:rgba(255,255,255,0.9);}
+
+/* NAV */
+nav{
+position:fixed;
+top:0;
+width:100%;
+background:rgba(10,15,44,0.9);
+padding:10px;
 display:flex;
 justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+z-index:200;
+backdrop-filter:blur(10px);
+}
+nav a{
+color:#7da2ff;
+text-decoration:none;
+font-size:13px;
+padding:6px 12px;
+border-radius:15px;
+transition:0.3s;
+}
+nav a:hover{background:rgba(125,162,255,0.2);}
+
+/* SECTIONS */
+.section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
 align-items:center;
+padding:90px 20px 40px;
 text-align:center;
+animation:fadeUp 1s ease forwards;
 }
-.flash{
-position:fixed;
-width:100%;height:100%;
-background:white;
-opacity:0;
-pointer-events:none;
-z-index:5;
-transition:opacity 0.3s;
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
 }
-.stars{position:fixed;width:100%;height:100%;overflow:hidden;z-index:0;}
-.star{
-position:absolute;
-width:2px;height:2px;
-background:white;
-border-radius:50%;
-opacity:0.7;
-animation:twinkle 3s infinite alternate;
-}
-@keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
-.container{
-z-index:2;
-max-width:600px;
-padding:30px 20px;
-animation:fadeIn 3s ease forwards;
-opacity:0;
-}
-@keyframes fadeIn{to{opacity:1;}}
+
 h1{
 font-family:'Great Vibes',cursive;
 font-size:55px;
+margin-bottom:15px;
 color:#7da2ff;
-text-shadow:0 0 20px rgba(125,162,255,0.8),0 0 40px rgba(125,162,255,0.4);
-transition:0.5s;
+text-shadow:0 0 20px rgba(125,162,255,0.7);
 }
-.pulse{animation:pulse 1.5s infinite;}
-@keyframes pulse{
-0%{transform:scale(1);text-shadow:0 0 20px rgba(125,162,255,0.8);}
-50%{transform:scale(1.08);text-shadow:0 0 40px rgba(125,162,255,1),0 0 80px rgba(125,162,255,0.6);}
-100%{transform:scale(1);text-shadow:0 0 20px rgba(125,162,255,0.8);}
+
+h2{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+margin-bottom:20px;
+color:#7da2ff;
 }
-.date{
-font-size:14px;
-opacity:0.6;
-margin:10px 0 25px 0;
-letter-spacing:3px;
-}
-.message-text{
-font-weight:300;
-line-height:1.8;
-font-size:16px;
-margin-bottom:30px;
-opacity:0.9;
-}
+
+p{max-width:500px;line-height:1.8;margin-bottom:20px;font-weight:300;}
+
 .btn{
-padding:14px 35px;
+padding:12px 25px;
 border:none;
-border-radius:30px;
+border-radius:25px;
 background:linear-gradient(45deg,#3f5efb,#5f8bff);
 color:white;
-font-size:16px;
-font-family:'Poppins',sans-serif;
 cursor:pointer;
+margin:5px;
 transition:0.3s;
-box-shadow:0 0 25px rgba(125,162,255,0.5);
 }
-.btn:hover{
-transform:scale(1.05);
-box-shadow:0 0 40px rgba(125,162,255,0.8);
+.btn:hover{transform:scale(1.05);}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:25px;
+border-radius:20px;
+border:1px solid rgba(125,162,255,0.2);
+max-width:500px;
 }
-.hidden-message{
-margin-top:30px;
-font-size:17px;
-line-height:1.8;
-opacity:0;
-transition:opacity 1.5s ease;
+
+/* INTRO */
+#intro{
+position:fixed;
+width:100%;
+height:100%;
+background:#0a0f2c;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:500;
 }
-.show{opacity:1;}
+
+/* MODE BUTTON */
+.mode{
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:300;
+}
+
+/* HEART */
 .heart{
 position:fixed;
 color:#7da2ff;
-z-index:3;
-animation:floatHeart 5s linear forwards;
+animation:float 4s linear forwards;
 pointer-events:none;
 }
-@keyframes floatHeart{
-0%{transform:translateY(100vh) scale(1);opacity:1;}
-50%{opacity:1;}
-100%{transform:translateY(-10vh) scale(1.5);opacity:0;}
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);opacity:0;}
 }
-.shooting-star{
+
+/* BUTTERFLY */
+.butterfly{
 position:fixed;
-width:80px;height:2px;
-background:linear-gradient(to right,transparent,white);
-z-index:1;
-animation:shoot 1.5s linear forwards;
+font-size:20px;
+animation:fly 12s linear forwards;
 pointer-events:none;
 }
-@keyframes shoot{
-0%{transform:translateX(0) translateY(0);opacity:1;}
-100%{transform:translateX(300px) translateY(200px);opacity:0;}
+@keyframes fly{
+0%{transform:translateX(-10vw) translateY(80vh);}
+100%{transform:translateX(110vw) translateY(-10vh);}
+}
+
+/* LOVE BAR */
+.bar-wrap{
+width:100%;
+background:rgba(255,255,255,0.1);
+border-radius:10px;
+overflow:hidden;
+height:15px;
+}
+.bar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#3f5efb,#ff4da6);
+transition:0.5s;
+}
+
+/* MEMORY */
+.memory{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+}
+.memory div{
+width:60px;
+height:60px;
+background:#7da2ff;
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:10px;
+cursor:pointer;
+font-size:25px;
+}
+
+/* COUNTDOWN */
+.count{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:20px;
+}
+.count div{
+background:rgba(125,162,255,0.2);
+padding:10px 15px;
+border-radius:10px;
 }
 </style>
 </head>
+
 <body>
-<div class="flash" id="flash"></div>
-<div class="stars" id="stars"></div>
-<audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b7b7e.mp3?filename=romantic-love-11786.mp3" type="audio/mpeg">
-</audio>
-<div class="container">
-<h1 id="name">Doğaya ✨</h1>
-<div class="date">02 / 07 / 2026 💙</div>
-<p class="message-text">
-Milyonlarca Dilek Hakkım Olsa Ben Yine Seni Seçerdim<br>
-Birini Bu kadar Sevmek Mümkünmü Bilmem Ama Senin Mutluluğun İçin Ömrümü Bile Verebilirim<br>
+
+<div id="intro">
+<h1>Doğa</h1>
+<p>Hazır mısın?</p>
+<button class="btn" onclick="enter()">Giriş</button>
+</div>
+
+<nav>
+<a href="#home">Ana Sayfa</a>
+<a href="#game">Oyun</a>
+<a href="#quiz">Quiz</a>
+<a href="#memory">Hafıza</a>
+<a href="#slot">Slot</a>
+<a href="#time">Zaman</a>
+<a href="#secret">Mesaj</a>
+</nav>
+
+<button class="btn mode" onclick="toggleMode()">🌙 / ☀️</button>
+
+<!-- HOME -->
+<div class="section" id="home">
+<h1>Doğa</h1>
+<p>
+Milyonlarca Dilek Hakkım Olsaydı Ben Yine Seni Dilerdim.<br>
+02/07/2026
 </p>
-<button class="btn" onclick="startLove()">Kalbime Dokun 💙</button>
-<div id="message" class="hidden-message">
-Sen benim en güzel başlangıcımsın.<br>
- . 💙
+<button class="btn" onclick="start()">Başlat</button>
+</div>
+
+<!-- LOVE GAME -->
+<div class="section" id="game">
+<h2>Aşk Seviyesi</h2>
+<div class="card">
+<button class="btn" onclick="addLove(20)">Çok</button>
+<button class="btn" onclick="addLove(40)">Fazla</button>
+<button class="btn" onclick="addLove(60)">Gerçekten Fazla</button>
+<button class="btn" onclick="addLove(100)">Sonsuz</button>
+<div class="bar-wrap"><div id="loveBar" class="bar"></div></div>
+<p id="loveText">0%</p>
 </div>
 </div>
+
+<!-- QUIZ -->
+<div class="section" id="quiz">
+<h2>Mini Quiz</h2>
+<p>En sevdiği hayvan?</p>
+<button class="btn" onclick="quiz('kedi')">Kedi</button>
+<button class="btn" onclick="quiz('köpek')">Köpek</button>
+<button class="btn" onclick="quiz('kelebek')">Kelebek 🦋</button>
+<p id="quizResult"></p>
+</div>
+
+<!-- MEMORY -->
+<div class="section" id="memory">
+<h2>Hafıza</h2>
+<div class="memory" id="memoryGame"></div>
+</div>
+
+<!-- SLOT -->
+<div class="section" id="slot">
+<h2>Slot</h2>
+<button class="btn" onclick="spin()">Çevir</button>
+<p id="slotResult"></p>
+</div>
+
+<!-- TIME -->
+<div class="section" id="time">
+<h2>02 / 07 / 2026</h2>
+<p>Geçen süre:</p>
+<div class="count">
+<div><span id="d">0</span> Gün</div>
+<div><span id="h">0</span> Saat</div>
+<div><span id="m">0</span> Dakika</div>
+<div><span id="s">0</span> Saniye</div>
+</div>
+</div>
+
+<!-- SECRET -->
+<div class="section" id="secret">
+<h2>Gizli Mesaj</h2>
+<input type="text" id="code" placeholder="Şifre">
+<button class="btn" onclick="check()">Aç</button>
+<p id="secretMsg"></p>
+</div>
+
 <script>
-var starsDiv=document.getElementById("stars");
-for(var i=0;i<150;i++){
-var star=document.createElement("div");
-star.className="star";
-star.style.top=Math.random()*100+"vh";
-star.style.left=Math.random()*100+"vw";
-star.style.animationDuration=(Math.random()*3+2)+"s";
-star.style.animationDelay=Math.random()*3+"s";
-starsDiv.appendChild(star);
+
+/* INTRO */
+function enter(){
+document.getElementById("intro").style.display="none";
 }
-function createHeart(){
-var heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="💙";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*25+15)+"px";
-document.body.appendChild(heart);
-setTimeout(function(){heart.remove();},5000);
+
+/* MODE */
+function toggleMode(){
+document.body.classList.toggle("light");
 }
-function createShootingStar(){
-var s=document.createElement("div");
-s.className="shooting-star";
-s.style.top=Math.random()*50+"vh";
-s.style.left=Math.random()*50+"vw";
-document.body.appendChild(s);
-setTimeout(function(){s.remove();},1500);
+
+/* HEART */
+function heart(){
+var h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💙";
+h.style.left=Math.random()*100+"vw";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),4000);
 }
-function flashEffect(){
-var flash=document.getElementById("flash");
-flash.style.opacity="0.7";
-setTimeout(function(){flash.style.opacity="0";},300);
+
+/* BUTTERFLY */
+setInterval(()=>{
+var b=document.createElement("div");
+b.className="butterfly";
+b.innerHTML="🦋";
+b.style.fontSize=(Math.random()*15+15)+"px";
+document.body.appendChild(b);
+setTimeout(()=>b.remove(),12000);
+},6000);
+
+/* START */
+function start(){
+for(let i=0;i<20;i++)setTimeout(heart,i*100);
 }
-function startLove(){
-document.getElementById("music").play();
-document.getElementById("message").classList.add("show");
-document.getElementById("name").classList.add("pulse");
-flashEffect();
-for(var i=0;i<50;i++){
-setTimeout(createHeart,i*100);
+
+/* LOVE BAR */
+var love=0;
+function addLove(v){
+love=v;
+document.getElementById("loveBar").style.width=v+"%";
+document.getElementById("loveText").innerText=v+"%";
+heart();
 }
-for(var j=0;j<5;j++){
-setTimeout(createShootingStar,j*300);
+
+/* QUIZ */
+function quiz(a){
+if(a==="kelebek"){
+document.getElementById("quizResult").innerText="Doğru.";
+for(let i=0;i<15;i++)setTimeout(heart,i*80);
+}else{
+document.getElementById("quizResult").innerText="Tekrar dene.";
 }
-setInterval(function(){
-createHeart();
-},2000);
-setInterval(function(){
-createShootingStar();
-},4000);
 }
+
+/* MEMORY */
+var symbols=["💙","🦋","💙","🦋"];
+symbols.sort(()=>0.5-Math.random());
+var first=null;
+symbols.forEach(sym=>{
+var c=document.createElement("div");
+c.innerText="?";
+c.onclick=function(){
+if(c.innerText!=="?")return;
+c.innerText=sym;
+if(!first){first=c;}
+else{
+if(first.innerText===c.innerText){first=null;}
+else{
+setTimeout(()=>{c.innerText="?";first.innerText="?";first=null;},700);
+}
+}
+};
+document.getElementById("memoryGame").appendChild(c);
+});
+
+/* SLOT */
+function spin(){
+var arr=["Seviyorum","Önemsiyorum","Yanındayım","Değerli"];
+document.getElementById("slotResult").innerText=arr[Math.floor(Math.random()*arr.length)];
+}
+
+/* COUNTDOWN */
+function update(){
+var start=new Date("2026-07-02T00:00:00");
+var now=new Date();
+var diff=now-start;
+var d=Math.floor(diff/86400000);
+var h=Math.floor(diff%86400000/3600000);
+var m=Math.floor(diff%3600000/60000);
+var s=Math.floor(diff%60000/1000);
+document.getElementById("d").innerText=d;
+document.getElementById("h").innerText=h;
+document.getElementById("m").innerText=m;
+document.getElementById("s").innerText=s;
+}
+setInterval(update,1000);
+update();
+
+/* SECRET */
+function check(){
+if(document.getElementById("code").value==="0207"){
+document.getElementById("secretMsg").innerText="02/07/2026 — iyi ki.";
+heart();
+}else{
+document.getElementById("secretMsg").innerText="Yanlış.";
+}
+}
+
 </script>
+
 </body>
 </html>
