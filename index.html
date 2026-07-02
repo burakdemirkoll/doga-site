@@ -25,12 +25,10 @@ color:white;
 overflow-x:hidden;
 transition:0.5s;
 }
-
 .light{
 background:linear-gradient(135deg,#eef2f3,#ffffff);
 color:#1b2a7a;
 }
-
 #intro{
 position:fixed;
 width:100%;
@@ -43,27 +41,21 @@ align-items:center;
 text-align:center;
 z-index:500;
 }
-
 #intro h1{
 font-family:'Great Vibes',cursive;
 font-size:45px;
 color:#7da2ff;
 margin-bottom:20px;
 }
-
 .btn{
-padding:12px 25px;
+padding:10px 20px;
 border:none;
-border-radius:25px;
-background:linear-gradient(45deg,#3f5efb,#5f8bff);
+border-radius:20px;
+background:#3f5efb;
 color:white;
 cursor:pointer;
 margin:5px;
-transition:0.3s;
 }
-
-.btn:hover{transform:scale(1.05);}
-
 .section{
 min-height:100vh;
 display:flex;
@@ -73,22 +65,19 @@ align-items:center;
 padding:80px 20px;
 text-align:center;
 }
-
 h1{
 font-family:'Great Vibes',cursive;
-font-size:55px;
+font-size:50px;
 color:#7da2ff;
 margin-bottom:20px;
 }
-
 .mode{
 position:fixed;
 bottom:20px;
 right:20px;
-z-index:300;
 }
 
-/* ✅ KALP */
+/* HEART */
 .heart{
 position:fixed;
 top:100vh;
@@ -97,13 +86,12 @@ animation:heartFloat 4s linear forwards;
 pointer-events:none;
 z-index:400;
 }
-
 @keyframes heartFloat{
-0%{transform:translateY(0);opacity:1;}
+0%{transform:translateY(0);}
 100%{transform:translateY(-120vh);opacity:0;}
 }
 
-/* ✅ KELEBEK */
+/* BUTTERFLY */
 .butterfly{
 position:fixed;
 top:80vh;
@@ -111,15 +99,56 @@ left:-10vw;
 font-size:22px;
 animation:butterflyFly 12s linear forwards;
 pointer-events:none;
-z-index:350;
 }
-
 @keyframes butterflyFly{
 0%{transform:translate(0,0);}
-25%{transform:translate(30vw,-10vh);}
-50%{transform:translate(60vw,-25vh);}
-75%{transform:translate(90vw,-45vh);}
-100%{transform:translate(120vw,-70vh);}
+100%{transform:translate(120vw,-80vh);}
+}
+
+/* MEMORY */
+.memory{
+display:grid;
+grid-template-columns:repeat(5,60px);
+gap:10px;
+}
+.card{
+width:60px;
+height:60px;
+background:#3f5efb;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:25px;
+border-radius:10px;
+cursor:pointer;
+}
+
+/* SLOT */
+.slot{
+display:flex;
+gap:10px;
+font-size:40px;
+margin:15px 0;
+}
+.reel{
+width:60px;
+height:60px;
+background:#111a4d;
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:10px;
+}
+
+#adminPanel{
+display:none;
+position:fixed;
+bottom:10px;
+left:10px;
+background:#111a4d;
+padding:10px;
+border-radius:10px;
+font-size:12px;
 }
 </style>
 </head>
@@ -135,56 +164,135 @@ z-index:350;
 
 <div class="section">
 <h1>Doğa</h1>
-<p>02/07/2026'dan beri hayat daha net.</p>
 <button class="btn" onclick="startEffect()">Başlat</button>
+
+<h2>Hafıza Oyunu</h2>
+<div class="memory" id="memoryGame"></div>
+<p>Hamle: <span id="moves">0</span></p>
+
+<h2>Slot</h2>
+<div class="slot">
+<div class="reel" id="r1">❔</div>
+<div class="reel" id="r2">❔</div>
+<div class="reel" id="r3">❔</div>
+</div>
+<button class="btn" onclick="spin()">Çevir</button>
+<p id="slotResult"></p>
+
+<h2>Geçen Süre</h2>
+<p id="timeText"></p>
+
+</div>
+
+<div id="adminPanel">
+Admin Panel<br>
+Ziyaret: <span id="visitCount">0</span>
 </div>
 
 <script>
 
-/* ✅ GİRİŞ */
+/* INTRO */
 function enterSite(){
 document.getElementById("intro").style.display="none";
 }
 
-/* ✅ GECE GÜNDÜZ */
+/* MODE */
 function toggleMode(){
 document.body.classList.toggle("light");
 }
 
-/* ✅ KALP EFEKTİ */
+/* HEART */
 function createHeart(){
-var heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="💙";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*20+15)+"px";
-document.body.appendChild(heart);
-setTimeout(function(){heart.remove();},4000);
+var h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💙";
+h.style.left=Math.random()*100+"vw";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),4000);
 }
 
-/* ✅ KELEBEK EFEKTİ */
+/* BUTTERFLY */
 function createButterfly(){
 var b=document.createElement("div");
 b.className="butterfly";
 b.innerHTML="🦋";
-b.style.fontSize=(Math.random()*15+18)+"px";
-b.style.animationDuration=(Math.random()*6+8)+"s";
 document.body.appendChild(b);
-setTimeout(function(){b.remove();},12000);
+setTimeout(()=>b.remove(),12000);
 }
-
-/* ✅ BAŞLAT */
-function startEffect(){
-for(var i=0;i<30;i++){
-setTimeout(createHeart,i*60);
-}
-for(var j=0;j<5;j++){
-setTimeout(createButterfly,j*500);
-}
-}
-
-/* ✅ OTOMATİK KELEBEK */
 setInterval(createButterfly,6000);
+
+/* START */
+function startEffect(){
+for(let i=0;i<25;i++)setTimeout(createHeart,i*60);
+}
+
+/* MEMORY */
+var symbols=["💙","🦋","✨","⭐","🌙"];
+var cards=[...symbols,...symbols];
+cards.sort(()=>0.5-Math.random());
+var first=null,moves=0;
+cards.forEach(sym=>{
+var c=document.createElement("div");
+c.className="card";
+c.innerText="?";
+c.onclick=function(){
+if(c.innerText!=="?")return;
+c.innerText=sym;
+if(!first){first=c;}
+else{
+moves++;
+document.getElementById("moves").innerText=moves;
+if(first.innerText!==c.innerText){
+setTimeout(()=>{
+c.innerText="?";
+first.innerText="?";
+first=null;
+},700);
+}else{
+first=null;
+}
+}
+};
+document.getElementById("memoryGame").appendChild(c);
+});
+
+/* SLOT */
+var icons=["💙","🦋","✨","⭐","🌙"];
+function spin(){
+var r1=document.getElementById("r1");
+var r2=document.getElementById("r2");
+var r3=document.getElementById("r3");
+r1.innerText=icons[Math.floor(Math.random()*icons.length)];
+r2.innerText=icons[Math.floor(Math.random()*icons.length)];
+r3.innerText=icons[Math.floor(Math.random()*icons.length)];
+if(r1.innerText===r2.innerText&&r2.innerText===r3.innerText){
+document.getElementById("slotResult").innerText="Kazandın 💙";
+}else{
+document.getElementById("slotResult").innerText="Tekrar dene.";
+}
+}
+
+/* TIME */
+function updateTime(){
+var start=new Date("2026-07-02T00:00:00");
+var now=new Date();
+var diff=now-start;
+document.getElementById("timeText").innerText=
+Math.floor(diff/86400000)+" gün";
+}
+setInterval(updateTime,1000);
+updateTime();
+
+/* ADMIN */
+let count=0;
+document.addEventListener("keydown",e=>{
+if(e.key==="a"){
+count++;
+if(count===5){
+document.getElementById("adminPanel").style.display="block";
+}
+}
+});
 
 </script>
 
