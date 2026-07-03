@@ -341,4 +341,181 @@ updateTime();
 </script>
 
 </body>
+  <!-- BODY kapanmadan hemen önce ekle -->
+
+<style>
+
+/* ===============================
+   GLOBAL EFFECT LAYER
+=================================*/
+
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#mouse-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,150,255,0.25) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+
+/* ===============================
+   CUSTOM CURSOR
+=================================*/
+
+#cursor {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00f2fe;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: 0.08s ease;
+  z-index: 9999;
+}
+
+body {
+  cursor: none;
+}
+
+/* ===============================
+   SCROLL REVEAL
+=================================*/
+
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 1.2s cubic-bezier(.17,.67,.83,.67);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+</style>
+
+<canvas id="particle-canvas"></canvas>
+<div id="mouse-glow"></div>
+<div id="cursor"></div>
+
+<script>
+
+/* ===============================
+   GLOBAL STATE
+=================================*/
+
+const AppState = {
+  particles: [],
+  mouse: { x: window.innerWidth/2, y: window.innerHeight/2 }
+};
+
+/* ===============================
+   CANVAS SETUP
+=================================*/
+
+const canvas = document.getElementById("particle-canvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+/* ===============================
+   PARTICLE SYSTEM
+=================================*/
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 3 + 1;
+    this.speedY = Math.random() * 0.5 + 0.2;
+    this.opacity = Math.random();
+  }
+
+  update() {
+    this.y -= this.speedY;
+    if (this.y < 0) {
+      this.y = canvas.height;
+      this.x = Math.random() * canvas.width;
+    }
+  }
+
+  draw() {
+    ctx.fillStyle = `rgba(0,200,255,${this.opacity})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 150; i++) {
+  AppState.particles.push(new Particle());
+}
+
+function animateParticles() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  AppState.particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ===============================
+   MOUSE GLOW + CURSOR
+=================================*/
+
+const glow = document.getElementById("mouse-glow");
+const cursor = document.getElementById("cursor");
+
+document.addEventListener("mousemove", e => {
+  AppState.mouse.x = e.clientX;
+  AppState.mouse.y = e.clientY;
+
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
+
+/* ===============================
+   SCROLL REVEAL ENGINE
+=================================*/
+
+const revealElements = document.querySelectorAll(".section, .glass");
+
+function revealOnScroll() {
+  revealElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      el.classList.add("active");
+      el.classList.add("reveal");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
+
+</script>
 </html>
