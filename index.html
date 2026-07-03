@@ -516,6 +516,238 @@ function revealOnScroll() {
 
 window.addEventListener("scroll", revealOnScroll);
 revealOnScroll();
+  <style>
+
+/* ===============================
+   SLOT PRO UI
+=================================*/
+
+#slot-pro {
+  text-align:center;
+  margin-top:100px;
+  position:relative;
+  z-index:5;
+}
+
+.reels {
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin:40px 0;
+}
+
+.reel {
+  width:90px;
+  height:90px;
+  font-size:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.05);
+  border-radius:15px;
+  backdrop-filter:blur(10px);
+  transition:0.2s;
+}
+
+.spin-btn {
+  padding:12px 40px;
+  border:none;
+  border-radius:40px;
+  font-size:18px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#00f2fe,#4facfe);
+  color:white;
+}
+
+.spin-btn:hover{
+  box-shadow:0 0 20px #00f2fe;
+}
+
+#level-info{
+  margin-top:20px;
+  font-size:14px;
+  opacity:0.8;
+}
+
+.achievement{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:rgba(0,0,0,0.7);
+  padding:15px 25px;
+  border-radius:15px;
+  backdrop-filter:blur(10px);
+  animation:slideIn 0.5s ease forwards;
+  z-index:9999;
+}
+
+@keyframes slideIn{
+  from{transform:translateX(200px);opacity:0;}
+  to{transform:translateX(0);opacity:1;}
+}
+
+.shake{
+  animation:shake 0.4s;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-10px);}
+  50%{transform:translateX(10px);}
+  75%{transform:translateX(-5px);}
+  100%{transform:translateX(0);}
+}
+
+</style>
+
+<section id="slot-pro">
+  <h2>Ultimate Slot</h2>
+  <div class="reels">
+    <div class="reel" id="r1">💙</div>
+    <div class="reel" id="r2">⭐</div>
+    <div class="reel" id="r3">🦋</div>
+  </div>
+  <button class="spin-btn" onclick="spin()">SPIN</button>
+  <div id="level-info"></div>
+</section>
+
+<script>
+
+/* ===============================
+   GAME STATE
+=================================*/
+
+const Game = {
+  coins:1000,
+  xp:0,
+  level:1,
+  combo:0,
+  spins:0,
+  achievements:[]
+};
+
+/* ===============================
+   SYMBOL SYSTEM
+=================================*/
+
+const symbols = [
+  {icon:"💙", weight:30},
+  {icon:"⭐", weight:25},
+  {icon:"🦋", weight:20},
+  {icon:"🌙", weight:10},
+  {icon:"💎", weight:8},
+  {icon:"👑", weight:2}
+];
+
+function getRandomSymbol(){
+  let total = symbols.reduce((a,b)=>a+b.weight,0);
+  let rand = Math.random()*total;
+  for(let s of symbols){
+    if(rand < s.weight) return s.icon;
+    rand -= s.weight;
+  }
+}
+
+/* ===============================
+   SPIN ENGINE
+=================================*/
+
+function spin(){
+
+  Game.spins++;
+
+  const reels = [
+    document.getElementById("r1"),
+    document.getElementById("r2"),
+    document.getElementById("r3")
+  ];
+
+  let results = [];
+
+  reels.forEach((reel,index)=>{
+    let duration = 1000 + index*400;
+    let start = Date.now();
+
+    function animate(){
+      let now = Date.now();
+      reel.innerHTML = getRandomSymbol();
+
+      if(now - start < duration){
+        requestAnimationFrame(animate);
+      }else{
+        let final = getRandomSymbol();
+        reel.innerHTML = final;
+        results[index] = final;
+
+        if(index === 2){
+          setTimeout(()=>checkWin(results),200);
+        }
+      }
+    }
+    animate();
+  });
+}
+
+/* ===============================
+   WIN SYSTEM
+=================================*/
+
+function checkWin(results){
+
+  if(results[0]===results[1] && results[1]===results[2]){
+
+    Game.combo++;
+    Game.xp += 50 * Game.combo;
+    Game.coins += 100 * Game.combo;
+
+    document.body.classList.add("shake");
+    setTimeout(()=>document.body.classList.remove("shake"),400);
+
+    showAchievement("Combo x"+Game.combo+"!");
+
+    if(results[0]==="👑"){
+      showAchievement("LEGENDARY WIN 👑");
+    }
+
+  }else{
+    Game.combo=0;
+  }
+
+  if(Game.xp >= Game.level*200){
+    Game.level++;
+    Game.xp=0;
+    showAchievement("Level Up! "+Game.level);
+  }
+
+  updateUI();
+}
+
+function updateUI(){
+  document.getElementById("level-info").innerHTML =
+    "Level: "+Game.level+
+    " | XP: "+Game.xp+
+    " | Coins: "+Game.coins+
+    " | Combo: "+Game.combo;
+}
+
+/* ===============================
+   ACHIEVEMENT POPUP
+=================================*/
+
+function showAchievement(text){
+  const div = document.createElement("div");
+  div.className="achievement";
+  div.innerHTML=text;
+  document.body.appendChild(div);
+
+  setTimeout(()=>{
+    div.remove();
+  },3000);
+}
+
+updateUI();
+
+</script>
 
 </script>
 </html>
